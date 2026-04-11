@@ -15,7 +15,7 @@ class Snake():
             dir = dir//90*90
             if size < 0:
                 size = 0
-            snake.shape=shape+"   "
+            snake.shape=shape+"  "
             snake.name = name
             snake.size = size
             snake.dir = dir
@@ -23,7 +23,7 @@ class Snake():
             snake.y = Snake.Screen.h//2
             snake.pos = pos
             snake.type = "snake"
-            snake.tail_shape = tail_shape+"   "
+            snake.tail_shape = tail_shape+"  "
             Snake.obj.append(snake)
 
         def forward(snake):
@@ -69,11 +69,11 @@ class Snake():
     class Screen():
         w = 15
         h = 15
-        def  __init__(screen, w=15, h=15, blank=".   "):
+        def  __init__(screen, w=15, h=15, blank="."):
             screen.w = w
             screen.h = h
             screen.screen = []
-            screen.blank = blank
+            screen.blank = blank+"   "
             for i in range(h):
                 screen.screen.append([])
                 for f in range(w):
@@ -171,7 +171,7 @@ class Snake():
                 y = random.randint(0, rtp_size_y-1)
             apple.x = x
             apple.y = y
-            apple.shape = shape+"   "
+            apple.shape = shape+"  "
             apple.type = "apple"
             Snake.obj.append(apple)
         def rtp(apple):
