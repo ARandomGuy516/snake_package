@@ -94,7 +94,7 @@ class Snake():
                 if i.type=="snake":
                     while len(i.pos) > i.size:
                         i.pos.pop(0)
-                    for f in range(len(snake.pos)):
+                    for f in range(len(i.pos)):
                         screen.screen[i.pos[f][1]][i.pos[f][0]] = i.tail_shape
                 screen.screen[int(i.y//1)][int(i.x//1)] = i.shape
 
