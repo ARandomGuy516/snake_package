@@ -15,7 +15,7 @@ class Snake():
             dir = dir//90*90
             if size < 0:
                 size = 0
-            snake.shape=shape+"   "
+            snake.shape=shape+"  "
             snake.name = name
             snake.size = size
             snake.dir = dir
@@ -23,7 +23,7 @@ class Snake():
             snake.y = Snake.Screen.h//2
             snake.pos = pos
             snake.type = "snake"
-            snake.tail_shape = tail_shape+"   "
+            snake.tail_shape = tail_shape+"  "
             Snake.obj.append(snake)
 
         def forward(snake):
@@ -74,6 +74,8 @@ class Snake():
             screen.h = h
             screen.screen = []
             screen.blank = blank+"   "
+            print(screen.blank)
+            exit()
             for i in range(h):
                 screen.screen.append([])
                 for f in range(w):
