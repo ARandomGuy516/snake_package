@@ -191,7 +191,7 @@ def main():
         if screen.inputed(k):
             snake.forward()
         coll = snake.collition()
-        if len(coll) > 0 and apple not in coll:
+        if "tail" in coll or "wall" in coll:
             print(snake.name, "died")
             screen.looser_menu()
             screen.reset()
