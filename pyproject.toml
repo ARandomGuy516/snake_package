@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "snake"
+version = "0.1.0"
+description = "A terminal snake game, importable as a package."
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "Ishay Weinberger" }]
+license = { text = "MIT" }
+
+[project.scripts]
+snake = "snake:main"
+
+[project.urls]
+Homepage = "https://github.com/ARandomGuy516/snake_package"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/snake"]
