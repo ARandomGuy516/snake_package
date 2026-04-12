@@ -56,13 +56,13 @@ class Snake():
         def save_pos(snake):
             snake.pos.append([int(snake.x//1), int(snake.y//1)])
         def update_der(snake, k=None):
-            if k == "w":
+            if k == "w" and snake.size==0 or k=="w" and snake.dir!=270:
                 snake.dir = 90
-            if k == "d":
+            if k == "d" and snake.size==0 or k=="d" and snake.dir!=180:
                 snake.dir = 0
-            if k == "a":
+            if k == "a" and snake.size==0 or k=="a" and snake.dir!=0:
                 snake.dir = 180
-            if k == "s":
+            if k == "s" and snake.size==0 or k=="s" and snake.dir!=90:
                 snake.dir = 270
 
     class Screen():
