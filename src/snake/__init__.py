@@ -4,7 +4,6 @@ import tty
 import termios
 import select
 
-
 class Snake():
     obj = []
     started = False
@@ -74,7 +73,6 @@ class Snake():
             screen.h = h
             screen.screen = []
             screen.blank = blank+"   "
-            print(screen.blank)
             for i in range(h):
                 screen.screen.append([])
                 for f in range(w):
@@ -181,7 +179,7 @@ class Snake():
 
 
 def main():
-    screen = Snake.Screen(15, 15)
+    screen = Snake.Screen(15, 15, "f")
     apple = Snake.Apple()
     snake = Snake.snake()
     screen.start_menu()
@@ -200,6 +198,5 @@ def main():
             snake.grow()
             apple.rtp()
         screen.update()
-
 
 __all__ = ["Snake", "main"]
