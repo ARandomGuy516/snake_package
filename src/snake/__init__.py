@@ -181,7 +181,7 @@ class Snake():
 
 
 def main():
-    screen = Snake.Screen(15, 15, "f")
+    screen = Snake.Screen()
     apple = Snake.Apple()
     snake = Snake.snake()
     screen.start_menu()
@@ -200,6 +200,6 @@ def main():
             snake.grow()
             apple.rtp()
         screen.update()
-main()
+
 
 __all__ = ["Snake", "main"]
