@@ -173,7 +173,7 @@ class Snake():
                 y = random.randint(0, rtp_size_y-1)
             apple.x = x
             apple.y = y
-            apple.shape = shape+"   "
+            apple.shape = shape+"  "
             apple.type = "apple"
             Snake.obj.append(apple)
         def rtp(apple):
