@@ -75,7 +75,6 @@ class Snake():
             screen.screen = []
             screen.blank = blank+"   "
             print(screen.blank)
-            exit()
             for i in range(h):
                 screen.screen.append([])
                 for f in range(w):
