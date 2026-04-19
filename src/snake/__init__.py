@@ -10,7 +10,7 @@ class Snake():
     score = 0
     has_run = False
     class snake:
-        def __init__(snake, name="Ishay", size=0, dir=0, shape="0", pos=[], tail_shape="1", alive=True):
+        def __init__(snake, name="Ishay", size=0, dir=0, shape="0", pos=[], tail_shape="1"):
             dir = dir//90*90
             if size < 0:
                 size = 0
@@ -39,6 +39,11 @@ class Snake():
             lis = []
             for i in Snake.obj:
                 if i != coll:
+                    if i.type=="boulder":
+                        for f in i.boulders:
+                            if f[0] == coll.x and f[1]-10 == coll.y:
+                                lis.append("boulder")
+                        continue
                     if i.x == coll.x and i.y == coll.y:
                         lis.append(i)
             if coll.x >= Snake.Screen.w or coll.x < 0 or coll.y>=Snake.Screen.h or coll.y < 0:
@@ -73,10 +78,16 @@ class Snake():
             screen.h = h
             screen.screen = []
             screen.blank = blank+"   "
+
+            for i in range(10):
+                screen.screen.append([])
+                for f in range(screen.w):
+                    screen.screen[i].append("   ")
+            
             for i in range(h):
                 screen.screen.append([])
                 for f in range(w):
-                    screen.screen[i].append(screen.blank)
+                    screen.screen[i+10].append(screen.blank)
             Snake.Screen.w = w
             Snake.Screen.h = h
 
@@ -85,18 +96,25 @@ class Snake():
                 print("")
 
             screen.screen = []
+            for i in range(10):
+                screen.screen.append([])
+                for f in range(screen.w):
+                    screen.screen[i].append("    ")
             for i in range(screen.h):
                 screen.screen.append([])
                 for f in range(screen.w):
-                    screen.screen[i].append(screen.blank)
+                    screen.screen[i+10].append(screen.blank)
             for i in Snake.obj:
+                if i.type=="boulder":
+                    for i in i.boulders:
+                        screen.screen[i[1]][i[0]] = i[2]
+                    continue
                 if i.type=="snake":
                     while len(i.pos) > i.size:
                         i.pos.pop(0)
                     for f in range(len(i.pos)):
-                        screen.screen[i.pos[f][1]][i.pos[f][0]] = i.tail_shape
-                screen.screen[int(i.y//1)][int(i.x//1)] = i.shape
-
+                        screen.screen[i.pos[f][1]+10][i.pos[f][0]] = i.tail_shape
+                screen.screen[int(i.y//1)+10][int(i.x//1)] = i.shape
             for i in screen.screen:
                 print("".join(i))
                 print("")
@@ -178,14 +196,47 @@ class Snake():
         def rtp(apple):
             apple.x = random.randint(0, apple.rtp_size_x - 1)
             apple.y = random.randint(0, apple.rtp_size_y - 1)
+    
+    class Boulder():
+        def __init__(boulder, shape="3", fall_speed=1, max=None, min=0, max_x=None, min_x=1, boulders=[], type="boulder", min_y=0, max_y = 2):
+            if max_x is None:
+                max_x = Snake.Screen.w-1
+            if max is None:
+                max = (max_x - min_x)//2
+            boulder.shape = shape+"   "
+            boulder.fall_speed = fall_speed
+            boulder.max = max
+            boulder.min = min
+            boulder.max_x = max_x
+            boulder.min_x = min_x
+            boulder.y = 0
+            boulder.type = type
+            boulder.max_y = max_y
+            boulder.min_y = min_y
+            if len(boulders) == 0:
+                i = 0
+                while i < max:
+                    boulders.append([random.randint(min_x, max_x), random.randint(min_y, max_y), boulder.shape, boulder.fall_speed, boulder.max, boulder.min_x, boulder.max_x, boulder.type])
+                    i+=1
+            boulder.boulders = boulders
+            Snake.obj.append(boulder)
+
+        def go_down(boulder):
+            for i in boulder.boulders:
+                i[1] += 1
+                if i[1] >= Snake.Screen.h+10:
+                    i[1] = random.randint(boulder.min_y, boulder.max_y)
+                    i[0] = random.randint(boulder.min_x, boulder.max_x)
 
 
 def main():
+    boulder = Snake.Boulder()
     screen = Snake.Screen()
     apple = Snake.Apple()
     snake = Snake.snake()
     screen.start_menu()
     while True:
+        screen.update()
         k = screen.check_for_inputs()
         snake.save_pos()
         snake.update_der(k)
@@ -196,10 +247,15 @@ def main():
             print(snake.name, "died")
             screen.looser_menu()
             screen.reset()
+        boulder.go_down()
+        if len(coll) > 0 and apple not in coll:
+            print(snake.name, "died")
+            screen.looser_menu()
+            screen.reset()
         if apple in coll:
             snake.grow()
             apple.rtp()
-        screen.update()
 
+main()
 
 __all__ = ["Snake", "main"]
