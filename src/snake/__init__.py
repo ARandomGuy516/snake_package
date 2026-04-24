@@ -46,8 +46,20 @@ class Snake():
                         continue
                     if i.x == coll.x and i.y == coll.y:
                         lis.append(i)
-            if coll.x >= Snake.Screen.w or coll.x < 0 or coll.y>=Snake.Screen.h or coll.y < 0:
+            if coll.x >= Snake.Screen.w:
+                coll.x = Snake.Screen.w-1
                 lis.append("wall")
+            if coll.x < 0:
+                coll.x = 0
+                lis.append("wall")
+    
+            if coll.y>=Snake.Screen.h:
+                coll.y = Snake.Screen.w-1
+                lis.append("wall")
+            if coll.y < 0:
+                coll.y = 0
+                lis.append("wall")
+
             if coll.type == "snake":
                 for i in range(len(coll.pos)):
                     if coll.pos[i][0] == int(coll.x) and coll.pos[i][1] == int(coll.y) and i != 0:
@@ -172,7 +184,7 @@ class Snake():
                 if i.type == "apple":
                     i.rtp()
             Snake.started = False
-            Snake.score = False
+            Snake.score = 0
 
     class Apple():
         def __init__(apple, x=None, y=None, shape="2", rtp_size_x=None, rtp_size_y=None):
@@ -244,11 +256,14 @@ def main():
             snake.forward()
         coll = snake.collition()
         if len(coll) > 0 and apple not in coll:
+            screen.update()
             print(snake.name, "died")
             screen.looser_menu()
             screen.reset()
         boulder.go_down()
+        coll = snake.collition()
         if len(coll) > 0 and apple not in coll:
+            screen.update()
             print(snake.name, "died")
             screen.looser_menu()
             screen.reset()
