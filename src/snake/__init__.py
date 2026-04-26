@@ -270,7 +270,4 @@ def main():
         if apple in coll:
             snake.grow()
             apple.rtp()
-
-main()
-
 __all__ = ["Snake", "main"]
