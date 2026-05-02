@@ -8,7 +8,7 @@ class Snake():
     obj = []
     started = False
     score = 0
-    has_run = False
+    dif = "normal"
     class snake:
         def __init__(snake, name="Ishay", size=0, dir=0, shape="0", pos=[], tail_shape="1"):
             dir = dir//90*90
@@ -47,18 +47,30 @@ class Snake():
                     if i.x == coll.x and i.y == coll.y:
                         lis.append(i)
             if coll.x >= Snake.Screen.w:
-                coll.x = Snake.Screen.w-1
-                lis.append("wall")
+                if Snake.dif == "normal":
+                    coll.x = Snake.Screen.w-1
+                    lis.append("wall")
+                else:
+                    coll.x = 0
             if coll.x < 0:
-                coll.x = 0
-                lis.append("wall")
+                if Snake.dif == "normal":
+                    coll.x = 0
+                    lis.append("wall")
+                else:
+                    coll.x = Snake.Screen.w-1
     
             if coll.y>=Snake.Screen.h:
-                coll.y = Snake.Screen.w-1
-                lis.append("wall")
+                if Snake.dif == "normal":
+                    coll.y = Snake.Screen.h-1
+                    lis.append("wall")
+                else:
+                    coll.y = 0
             if coll.y < 0:
-                coll.y = 0
-                lis.append("wall")
+                if Snake.dif == "normal":
+                    coll.y = 0
+                    lis.append("wall")
+                else:
+                    coll.y = Snake.Screen.h-1
 
             if coll.type == "snake":
                 for i in range(len(coll.pos)):
@@ -152,15 +164,19 @@ class Snake():
             return Snake.started
 
         def start_menu(screen):
-            print("press p to play. press q to quit.")
+            print("press e to play on easy mode, press n to play on normal mode. press q to quit.")
             k = screen.get_key(1)
-            while k != "p" and k != "q":
+            while k != "e" and k !="n" and k != "q":
                 k = screen.get_key(1)
-                if k == "p":
+                if k == "e":
+                    Snake.dif = "easy"
+                    return
+                if k == "n":
+                    Snake.dif = "normal"
                     return
                 if k == "q":
                     exit()
-                if k != "p" and k != "q" and k != 1:
+                if k != "n" and k != "e" and k != "q" and k != 1:
                     print("I didnt get that")
 
         def looser_menu(screen):
@@ -242,6 +258,22 @@ class Snake():
 
 
 def main():
+    import argparse
+    argparse.ArgumentParser(
+        prog="snake",
+        description=(
+            "A terminal snake game.\n\n"
+            "Eat apples to grow, avoid your own tail, and dodge falling boulders.\n"
+            "On normal mode you also lose if you hit a wall; on easy mode you wrap around.\n"
+            "Controls:\n"
+            "  w / a / s / d  move up / left / down / right\n"
+            "  e              start playing on easy mode (walls wrap)\n"
+            "  n              start playing on normal mode (walls kill)\n"
+            "  r              restart (after losing)\n"
+            "  q              quit"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    ).parse_args()
     boulder = Snake.Boulder()
     screen = Snake.Screen()
     apple = Snake.Apple()
@@ -270,4 +302,5 @@ def main():
         if apple in coll:
             snake.grow()
             apple.rtp()
+
 __all__ = ["Snake", "main"]
