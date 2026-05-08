@@ -306,27 +306,27 @@ def main():
     snake = Snake.snake()
     screen.start_menu()
     while True:
-        screen.update()
         k = screen.check_for_inputs()
-        snake.save_pos()
-        snake.update_der(k)
         if screen.inputed(k):
+            screen.update()
+            snake.save_pos()
+            snake.update_der(k)
             snake.forward()
-        coll = snake.collition()
-        if len(coll) > 0 and apple not in coll:
-            screen.update()
-            print(snake.name, "died")
-            screen.looser_menu()
-            screen.reset()
-        boulder.go_down()
-        coll = snake.collition()
-        if len(coll) > 0 and apple not in coll:
-            screen.update()
-            print(snake.name, "died")
-            screen.looser_menu()
-            screen.reset()
-        if apple in coll:
-            snake.grow()
-            apple.rtp()
+            coll = snake.collition()
+            if len(coll) > 0 and apple not in coll:
+                screen.update()
+                print(snake.name, "died")
+                screen.looser_menu()
+                screen.reset()
+            boulder.go_down()
+            coll = snake.collition()
+            if len(coll) > 0 and apple not in coll:
+                screen.update()
+                print(snake.name, "died")
+                screen.looser_menu()
+                screen.reset()
+            if apple in coll:
+                snake.grow()
+                apple.rtp()
 
 __all__ = ["Snake", "main"]
