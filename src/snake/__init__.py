@@ -199,6 +199,15 @@ class Snake():
                     i.size = 0
                 if i.type == "apple":
                     i.rtp()
+                if i.type == "boulder":
+                    j = 0
+                    i.boulders = []
+                    while j < i.max:
+                        g = [random.randint(i.min_x, i.max_x), random.randint(i.min_y, i.max_y), i.shape, i.fall_speed, i.max, i.min_x, i.max_x, i.type]
+                        if g in i.boulders:
+                            continue
+                        i.boulders.append(g)
+                        j+=1
             Snake.started = False
             Snake.score = 0
 
@@ -241,11 +250,13 @@ class Snake():
             boulder.type = type
             boulder.max_y = max_y
             boulder.min_y = min_y
-            if len(boulders) == 0:
-                i = 0
-                while i < max:
-                    boulders.append([random.randint(min_x, max_x), random.randint(min_y, max_y), boulder.shape, boulder.fall_speed, boulder.max, boulder.min_x, boulder.max_x, boulder.type])
-                    i+=1
+            i = 0
+            while i < max:
+                g = [random.randint(min_x, max_x), random.randint(min_y, max_y), boulder.shape, boulder.fall_speed, boulder.max, boulder.min_x, boulder.max_x, boulder.type]
+                if g in boulders:
+                    continue
+                boulders.append(g)
+                i+=1
             boulder.boulders = boulders
             Snake.obj.append(boulder)
 
