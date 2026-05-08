@@ -87,11 +87,11 @@ class Snake():
         def update_der(snake, k=None):
             if k == "w" and snake.size==0 or k=="w" and snake.dir!=270:
                 snake.dir = 90
-            if k == "d" and snake.size==0 or k=="d" and snake.dir!=180:
+            elif k == "d" and snake.size==0 or k=="d" and snake.dir!=180:
                 snake.dir = 0
-            if k == "a" and snake.size==0 or k=="a" and snake.dir!=0:
+            elif k == "a" and snake.size==0 or k=="a" and snake.dir!=0:
                 snake.dir = 180
-            if k == "s" and snake.size==0 or k=="s" and snake.dir!=90:
+            elif k == "s" and snake.size==0 or k=="s" and snake.dir!=90:
                 snake.dir = 270
 
     class Screen():
@@ -306,27 +306,25 @@ def main():
     snake = Snake.snake()
     screen.start_menu()
     while True:
+        screen.update()
         k = screen.check_for_inputs()
+        snake.save_pos()
+        snake.update_der(k)
         if screen.inputed(k):
-            screen.update()
-            snake.save_pos()
-            snake.update_der(k)
             snake.forward()
-            coll = snake.collition()
-            if len(coll) > 0 and apple not in coll:
-                screen.update()
-                print(snake.name, "died")
-                screen.looser_menu()
-                screen.reset()
+        coll = snake.collition()
+        if len(coll) > 0 and apple not in coll:
+            screen.update()
+            print(snake.name, "died")
+            screen.looser_menu()
+            screen.reset()
+        if screen.inputed(k):
             boulder.go_down()
-            coll = snake.collition()
-            if len(coll) > 0 and apple not in coll:
-                screen.update()
-                print(snake.name, "died")
-                screen.looser_menu()
-                screen.reset()
-            if apple in coll:
-                snake.grow()
-                apple.rtp()
+        coll = snake.collition()
+        if len(coll) > 0 and apple not in coll:
+            screen.update
+            print(snake.name, "died")
+            screen.looser_menu()
+            screen.reset()   
 
 __all__ = ["Snake", "main"]
