@@ -322,9 +322,12 @@ def main():
             boulder.go_down()
         coll = snake.collition()
         if len(coll) > 0 and apple not in coll:
-            screen.update
+            screen.update()
             print(snake.name, "died")
             screen.looser_menu()
             screen.reset()   
+        if apple in coll:
+            snake.grow()
+            apple.rtp()
 
 __all__ = ["Snake", "main"]
