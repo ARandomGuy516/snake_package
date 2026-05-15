@@ -1,6 +1,6 @@
-# snake
+# gameshell
 
-A tiny terminal snake game, importable as a Python package.
+A library for making classic terminal games easily. Currently includes snake.
 
 ## Install
 
@@ -21,13 +21,13 @@ pip install git+https://github.com/ARandomGuy516/snake_package
 ```bash
 snake
 # or
-python -m snake
+python -m gameshell
 ```
 
 ## Use as a library
 
 ```python
-from snake import Snake, main
+from snake import main
 
 main()  # run the game
 ```
