@@ -7,13 +7,13 @@ A library for making classic terminal games easily. Currently includes snake.
 From GitHub with `uv`:
 
 ```bash
-uv add git+https://github.com/ARandomGuy516/snake_package
+uv add git+https://github.com/ARandomGuy516/gameshell_package.git
 ```
 
 Or with `pip`:
 
 ```bash
-pip install git+https://github.com/ARandomGuy516/snake_package
+pip install git+https://github.com/ARandomGuy516/gameshell_package.git
 ```
 
 ## Play
